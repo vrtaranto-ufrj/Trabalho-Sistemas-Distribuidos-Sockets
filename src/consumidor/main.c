@@ -77,11 +77,13 @@ int main(int argc, const char **argv) {
 	printf("Conectado!\n");
 	
 	while (1) {
+		// Espera receber uma mensagem
 		len_msg = recv(sfd_prod, buffer, BUFF_SIZE, 0);
 		if (len_msg == -1) {
 			perror("recv");
 			exit(EXIT_FAILURE);
 		}
+		// Se o tamanho da mensagem for 0, o cliente fechou a conexão abrutamente
 		if (len_msg == 0) {
 			break;
 		}
@@ -94,6 +96,7 @@ int main(int argc, const char **argv) {
 			break;
 		}
 		
+		// Testa se o número é primo e printa
 		printf("isPrime(%lu) = ", num);
 		if (isPrime(num)) {
 			buffer_enviar = 1;
@@ -104,6 +107,7 @@ int main(int argc, const char **argv) {
 			printf("false\n");
 		}
 
+		// Envia a resposta
 		len_msg_env = send(sfd_prod, &buffer_enviar, SIZE_SEND, 0);
 		if (len_msg_env == -1) {
 			perror("send");
@@ -114,6 +118,7 @@ int main(int argc, const char **argv) {
 
 	printf("Terminando programa\n");
 
+	// Fecha os sockets
 	ret = close(sfd_prod);
 	if (ret == -1) {
 		fprintf(stderr, "Produtor Socket ");

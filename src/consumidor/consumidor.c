@@ -16,13 +16,15 @@ void getMyIp(struct in_addr *ip) {
 	struct ifaddrs *addrs;
 	int ret, family;
 	char host[NI_MAXHOST];
-
+	
+	// Obtem a lista de interfaces de rede em uma lista encadeada
 	ret = getifaddrs(&addrs);
 	if (ret == -1) {
 		perror("getifaddrs");
 		exit(EXIT_SUCCESS);
 	}
-
+	
+	// Itera sobre a lista de interfaces de rede
 	for (struct ifaddrs *ifa = addrs; ifa != NULL; ifa = ifa->ifa_next) {
 		if (ifa->ifa_addr == NULL) {
 			continue;
@@ -30,13 +32,16 @@ void getMyIp(struct in_addr *ip) {
 
 		family = ifa->ifa_addr->sa_family;
 
+		// Se a interface for do tipo IPv4 e não for loopback (127.0.0.1)
 		if (family == AF_INET && !(ifa->ifa_flags & IFF_LOOPBACK)) {
+			// Obtem a struct in_addr correspondente ao endereço IP da interface
 			ret = getnameinfo(ifa->ifa_addr, sizeof(struct sockaddr_in), host, NI_MAXHOST, NULL, 0, NI_NUMERICHOST);
 			if (ret != 0) {
 				fprintf(stderr, "getnameinfo() failed: %s\n", gai_strerror(ret));
 				exit(EXIT_FAILURE);
 			}
-
+			
+			// Converte o endereço IP de string para struct in_addr
 			ret = inet_aton(host, ip);
 			if (ret == 0) {
 				fprintf(stderr, "Formato IP invalido!\n");
@@ -45,6 +50,7 @@ void getMyIp(struct in_addr *ip) {
 			break;
 		}
 	}
+	// Libera a memória alocada pela função getifaddrs
 	freeifaddrs(addrs);
 }
 

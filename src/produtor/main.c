@@ -92,16 +92,19 @@ int main(int argc, const char **argv) {
 			perror("send");
 			exit(EXIT_FAILURE);
 		}
-
+		
+		// Espera receber a resposta
 		len_msg_recv = recv(sfd, &buffer_receber, SIZE_RECV, 0);
 		if (len_msg_recv == -1) {
 			perror("recv");
 			exit(EXIT_FAILURE);
 		}
+		// Se o tamanho da mensagem for 0, então a conexão foi fechada abruptamente
 		if (len_msg_recv == 0) {
 			break;
 		}
 		
+		// Checa se o número era primo
 		if (buffer_receber) {
 			printf("O número %d é primo\n", num);
 		}
@@ -111,6 +114,8 @@ int main(int argc, const char **argv) {
 		
 		vezes++;
 	}
+
+	// Fecha o socket
 	ret = close(sfd);
 	if (ret == -1) {
 		perror("close");
