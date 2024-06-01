@@ -1,5 +1,5 @@
 # Trabalho-Sistemas-Distribuidos-Sockets
-Trabalho da disciplina Sistemas Distribuídos sobre Sockets
+Trabalho da disciplina Sistemas Distribuídos sobre Sockets desenvolvido em C.
 
 ## Objetivo
 O objetivo deste trabalho é implementar um sistema de comunicação entre processos utilizando sockets. O sistema deve ser composto por um consumidor, o servidor, e um produtor, o cliente. O produtor gera números aleatórios e os envia para o servidor, que calcula se eles são primos ou não e retorna o resultado para o produtor.
