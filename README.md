@@ -20,5 +20,5 @@ make
 ```
 
 ## Autores
-- [Vitor Taranto](
-- [Brian Medeiros](
+- [Vitor Taranto]
+- [Brian Medeiros]
