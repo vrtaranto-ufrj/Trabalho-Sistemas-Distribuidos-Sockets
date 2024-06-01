@@ -16,7 +16,7 @@ int main(int argc, const char **argv) {
 	const char *ip_str = argv[1];
 	int sfd, ret, num;
 	struct sockaddr_in addr;
-	size_t len_msg, len_msg_recv;
+	ssize_t len_msg, len_msg_recv;
 	char buffer[BUFF_SIZE], buffer_receber, *endptr;
 	unsigned long quantidade, vezes;
 
@@ -45,7 +45,7 @@ int main(int argc, const char **argv) {
 	// Inicializando a struct sockaddr_in
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(PORTA);
-	ret = inet_aton(ip_str, &addr.sin_addr);
+	ret = inet_pton(AF_INET, ip_str, &addr.sin_addr);
 	if (ret == 0) {
 		fprintf(stderr, "Formato IP invalido!\n");
 		exit(EXIT_FAILURE);

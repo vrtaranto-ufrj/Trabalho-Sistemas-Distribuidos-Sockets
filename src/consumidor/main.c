@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 
 #include "consumidor.h"
 
@@ -13,13 +14,13 @@ int main(int argc, const char **argv) {
 	int sfd, sfd_prod, ret, opt;
 	struct sockaddr_in myaddr, prodaddr;
 	socklen_t addrlen;
-	size_t len_msg, len_msg_env;
+	ssize_t len_msg, len_msg_env;
 	char buffer[BUFF_SIZE], buffer_enviar;
 	unsigned long num;
 
 	// Checa o número de argumentos
 	if (argc != NUM_ARGS) {
-		fprintf(stderr, "Uso: %s\n", argv[1]);
+		fprintf(stderr, "Uso: %s\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
 
@@ -30,9 +31,12 @@ int main(int argc, const char **argv) {
 	myaddr.sin_family = AF_INET;
 	myaddr.sin_port = htons(PORTA);
 	
-	// Descobre o IP da maquina e coloca na struct sockaddr_in
+	// Descobre o IP da máquina e coloca na struct sockaddr_in
 	getMyIp(&myaddr.sin_addr);
-	
+
+	// Mostra o IP da máquina
+	printf("Meu IP: %s\n", inet_ntoa(myaddr.sin_addr));
+
 	// Inicia o Socket
 	sfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sfd == -1) {

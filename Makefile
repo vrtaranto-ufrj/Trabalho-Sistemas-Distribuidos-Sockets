@@ -13,7 +13,7 @@ OBJ_PRODUTOR = $(SRC_PRODUTOR:$(DIR_PRODUTOR)/%.c=$(DIR_OBJ)/produtor/%.o)
 
 # Compilador e flags
 CC = gcc
-CFLAGS = -Wall -g
+CFLAGS = -Wall -Wextra -Werror -pedantic -g
 
 # Alvo principal
 all: consumidor produtor
