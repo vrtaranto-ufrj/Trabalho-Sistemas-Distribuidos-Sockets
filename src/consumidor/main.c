@@ -7,6 +7,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <errno.h>
 
 #include "consumidor.h"
 
@@ -70,6 +71,7 @@ int main(int argc, const char **argv) {
 	printf("Aguardando conexão...\n");
 	sfd_prod = accept(sfd, (struct sockaddr*) &prodaddr, &addrlen);
 	if (sfd_prod == -1) {
+
 		perror("accept");
 		exit(EXIT_FAILURE);
 	}
